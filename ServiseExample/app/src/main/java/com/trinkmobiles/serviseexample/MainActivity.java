@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 
 public class MainActivity extends Activity {
@@ -16,6 +17,9 @@ public class MainActivity extends Activity {
 
         if (!isServiceRunning(ServiceExample.class))
             startService(new Intent(MainActivity.this, ServiceExample.class));
+
+        findViewById(R.id.activity_main_stop_service).setOnClickListener(new StopOnClick());
+
     }
 
     private boolean isServiceRunning(Class<?> serviceClass) {
@@ -26,6 +30,14 @@ public class MainActivity extends Activity {
             }
         }
         return false;
+    }
+
+    private class StopOnClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (isServiceRunning(ServiceExample.class))
+                stopService(new Intent(MainActivity.this, ServiceExample.class));
+        }
     }
 
 }
